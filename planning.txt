@@ -1,0 +1,13 @@
+sign language
+- register ONE letter
+
+https://www.learnrobotics.org/blog/communication-between-arduino-python/#:~:text=Now%20to%20communicate%20between%20Arduino,module%20required%20for%20Serial%20communication.
+
+A - 
+    P 100
+    R 100
+    M 100
+    I 100
+    T 0
+
+B - 
