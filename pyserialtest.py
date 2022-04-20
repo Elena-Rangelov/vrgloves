@@ -4,13 +4,13 @@ import time
 arduino = serial.Serial('COM3', 9600)
 time.sleep(2)
 
-print arduino.readline()
-print ("Enter '1' to turn 'on' the LED and '0' to turn LED 'off'")
+print(arduino.readline())
+print("Enter '1' to turn 'on' the LED and '0' to turn LED 'off'")
 
 while 1:
 
     var = raw_input()
-    print "You Entered :", var
+    print("You Entered :", var)
 
     if(var == '1'):
         arduino.write('1')
