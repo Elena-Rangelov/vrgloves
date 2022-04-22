@@ -1,6 +1,6 @@
-#import tensorflow as tf
-#from tensorflow.keras.layers import Dense
-#from tensorflow.keras import Sequential
+import tensorflow as tf
+from tensorflow.keras.layers import Dense
+from tensorflow.keras import Sequential
 import csv
 #model.compile(optimizer='sgd', loss='mse', metrics=['accuracy'])
 #model.fit(X, y, epochs=100, batch_size=32)
