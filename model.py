@@ -20,7 +20,7 @@ print(outputs)
     
 
 
-'''
+
 X, y = df.values[:, :-1], df.values[:, -1]
 # ensure all data are floating point values
 X = X.astype('float32')
@@ -46,4 +46,3 @@ print('Test Accuracy: %.3f' % acc)
 row = [5.1,3.5,1.4,0.2]
 yhat = model.predict([row])
 print('Predicted: %s (class=%d)' % (yhat, argmax(yhat)))
-'''
