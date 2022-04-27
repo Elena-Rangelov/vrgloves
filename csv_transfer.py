@@ -14,7 +14,7 @@ for i in range(len(filenames)):
         values = []
         for i in range(26):
             values.append(next(reader)[0])
-            print(values)
+        print(values)
         
     with open("output.csv", 'a', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter=',', quotechar=',', quoting=csv.QUOTE_MINIMAL)
