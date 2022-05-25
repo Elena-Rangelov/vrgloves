@@ -1,8 +1,6 @@
-from sklearn.datasets import make_regression
-from sklearn.preprocessing import StandardScaler
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.optimizers import SGD
+#import tensorflow as tf
+#from tensorflow.keras.layers import Dense
+#from tensorflow.keras import Sequential
 import csv
 #model.compile(optimizer='sgd', loss='mse', metrics=['accuracy'])
 #model.fit(X, y, epochs=100, batch_size=32)
@@ -19,33 +17,27 @@ with open("output.csv", 'r') as csvfile:
 
 print(inputs)
 print(outputs)
-    
 
 
-# generate regression dataset
-X, y = make_regression(n_samples=1000, n_features=20, noise=0.1, random_state=1)
-# standardize dataset
-X = StandardScaler().fit_transform(X)
-y = StandardScaler().fit_transform(y.reshape(len(y),1))[:,0]
-# split into train and test
-n_train = 500
-trainX, testX = X[:n_train, :], X[n_train:, :]
-trainy, testy = y[:n_train], y[n_train:]
-# define model
+
+X, y = df.values[:, :-1], df.values[:, -1]
+# ensure all data are floating point values
+X = X.astype('float32')
+# encode strings to integer
+y = LabelEncoder().fit_transform(y)
+print(X_train.shape, X_test.shape)
+# determine the number of input features
+n_features = X_train.shape[1]
 model = Sequential()
-model.add(Dense(25, input_dim=20, activation='relu', kernel_initializer='he_uniform'))
-model.add(Dense(1, activation='linear'))
-opt = SGD(lr=0.01, momentum=0.9)
-model.compile(loss='mean_squared_error', optimizer=opt)
-# fit model
-history = model.fit(trainX, trainy, validation_data=(testX, testy), epochs=100, verbose=0)
+model.add(Dense(10, activation='relu', kernel_initializer='he_normal', input_shape=(n_features,)))
+model.add(Dense(8, activation='relu', kernel_initializer='he_normal'))
+model.add(Dense(26, activation='softmax'))
+model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+model.fit(X_train, y_train, epochs=150, batch_size=32, verbose=0)
 # evaluate the model
-train_mse = model.evaluate(trainX, trainy, verbose=0)
-test_mse = model.evaluate(testX, testy, verbose=0)
-print('Train: %.3f, Test: %.3f' % (train_mse, test_mse))
-# plot loss during training
-pyplot.title('Loss / Mean Squared Error')
-pyplot.plot(history.history['loss'], label='train')
-pyplot.plot(history.history['val_loss'], label='test')
-pyplot.legend()
-pyplot.show()
+loss, acc = model.evaluate(X_test, y_test, verbose=0)
+print('Test Accuracy: %.3f' % acc)
+# make a prediction
+row = [5.1,3.5,1.4,0.2]
+yhat = model.predict([row])
+print('Predicted: %s (class=%d)' % (yhat, argmax(yhat)))
